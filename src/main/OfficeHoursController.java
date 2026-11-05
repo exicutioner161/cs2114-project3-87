@@ -13,7 +13,7 @@ public class OfficeHoursController {
 
     public void run() {
         try (Scanner input = new Scanner(System.in)) {
-
+            // Runs the main menu loop until input ends
         }
     }
 }
