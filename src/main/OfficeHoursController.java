@@ -3,8 +3,8 @@ package main;
 import java.util.Scanner;
 
 public class OfficeHoursController {
-    private OfficeHoursSession session;
-    private ConsoleView view;
+    private final OfficeHoursSession session;
+    private final ConsoleView view;
 
     public OfficeHoursController(OfficeHoursSession session, ConsoleView view) {
         this.session = session;
