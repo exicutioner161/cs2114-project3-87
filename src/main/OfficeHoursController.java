@@ -24,6 +24,5 @@ public class OfficeHoursController {
 
     public void run() {
         // Runs the main menu loop until input ends
-
     }
 }
