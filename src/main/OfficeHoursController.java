@@ -25,4 +25,8 @@ public class OfficeHoursController {
     public void run() {
         // Runs the main menu loop until input ends
     }
+
+    private void invalidInputMessage() {
+        System.out.println("Invalid input! Try again.");
+    }
 }
