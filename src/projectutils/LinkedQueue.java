@@ -35,8 +35,12 @@ public class LinkedQueue<T> {
     /**
      * Adds entry to the back
      * @param data to be added to the queue
+     * @throws IllegalArgumentException if data is null
      */
     public void enqueue(T data) {
+        if (data == null) {
+            throw new IllegalArgumentException("Data can't be null");
+        }
         Node<T> newNode = new Node<T>(data);
         if (isEmpty()) {
             firstNode = newNode;

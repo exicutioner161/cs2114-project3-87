@@ -180,4 +180,17 @@ public class LinkedQueueTest extends TestCase {
         assertEquals("B", dumb);
         assertEquals("C", queue.getFront());
     }
+    /**
+     * tests enqueue on bad input
+     */
+    public void testEnqueueNull() {
+        Exception exception = null;
+        try {
+            queue.enqueue(null);
+        }
+        catch (IllegalArgumentException e) {
+            exception = e;
+        }
+        assertNotNull(exception);
+    }
 }
