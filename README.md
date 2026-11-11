@@ -10,6 +10,7 @@ Import this folder in Eclipse with File > Import > General > Existing Projects i
 
 - View demo: right-click `src/main/ConsoleViewDemo.java` > Run As > Java Application. Type a name. Type `quit` to stop.
 - View tests: right-click `tests/maintest/ConsoleViewTest.java` > Run As > JUnit Test.
+- Demo tests: right-click `tests/maintest/ConsoleViewDemoTest.java` > Run As > JUnit Test.
 - Queue tests: right-click `tests/projectutilstest/LinkedQueueTest.java` > Run As > JUnit Test. These run without the view.
 
 The view demo is only an input/output demo. It does not join or serve students. In the main branch used for this draft, OfficeHoursSession is empty and OfficeHoursController.run is a stub. OfficeHoursApp is therefore not yet a working full MVP.
@@ -59,6 +60,8 @@ Tests should cover no current student, an empty waiting line, a wrong PIN, queue
 | src/main/ConsoleView.java | Codex drafted the view at Zhaojin Gao's request, using the group's Model/View Boundary design. |
 | src/main/ConsoleViewDemo.java | Codex drafted a view-only demo at Zhaojin Gao's request. |
 | tests/maintest/ConsoleViewTest.java | Codex drafted and ran the view tests at Zhaojin Gao's request. |
+
+| tests/maintest/ConsoleViewDemoTest.java | Codex drafted and ran demo exit tests at Zhaojin Gao's request. |
 
 This table covers only these changed files. The group must add a row for every other class and test file, using actual contributions. Add personal review or revisions only after doing them.
 
