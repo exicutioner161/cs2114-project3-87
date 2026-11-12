@@ -188,9 +188,9 @@ We'll compare this prediction with what actually changed in Deliverable 4.
 | --- | --- |
 | `src/projectutils/LinkedQueue.java` | Rahul Rajendran: wrote the class (GenAI-assisted with Claude), including the null check in `enqueue`. |
 | `src/projectutils/EmptyQueueException.java` | Rahul Rajendran: wrote it. |
-| `src/student/StudentRequest.java` | |
-| `src/student/HelpType.java` | |
-| `src/student/StudentStatus.java` | |
+| `src/student/StudentRequest.java` | | Zayd pathan : wrote it
+| `src/student/HelpType.java` | | Zayd pathan : wrote it
+| `src/student/StudentStatus.java` | | Zayd pathan : wrote it
 | `src/main/OfficeHoursSession.java` | Brian Tran: drafted using GenAI and reviewed manually |
 | `src/main/OfficeHoursController.java` | Brian Tran: drafted using GenAI and reviewed manually |
 | `src/main/OfficeHoursApp.java` | Brian Tran: wrote manually |
@@ -202,9 +202,9 @@ We'll compare this prediction with what actually changed in Deliverable 4.
 | `tests/maintest/OfficeHoursAppTest.java` | |
 | `tests/maintest/ConsoleViewTest.java` | Zhaojin Gao: Requested view tests. Codex drafted them and reran all 9 tests successfully after the merge. |
 | `tests/maintest/ConsoleViewDemoTest.java` | Zhaojin Gao: Requested demo exit tests. Codex drafted them and reran all 3 tests successfully after the merge. |
-| `tests/studenttest/StudentRequestTest.java` | |
-| `tests/studenttest/HelpTypeTest.java` | |
-| `tests/studenttest/StudentStatusTest.java` | |
+| `tests/studenttest/StudentRequestTest.java` | | Zayd Pathan: used codex to help draft them
+| `tests/studenttest/HelpTypeTest.java` | |  Zayd pathan : wrote it
+| `tests/studenttest/StudentStatusTest.java` | | Zayd pathan : wrote it
 
 ## GenAI Note
 
@@ -215,3 +215,4 @@ We'll compare this prediction with what actually changed in Deliverable 4.
 **Brian Tran:** I used Copilot to create basic drafts of `OfficeHoursController` and `OfficeHoursSession` using the spec document as context, then I manually reviewed the code afterwards.
 
 **Zayd Pathan:**
+I used ChatGPT to help implement the StudentRequest, HelpType, and StudentStatus classes and create their corresponding JUnit test classes. I provided the project specification and asked for explanations of how to structure the classes, implement methods, and handle invalid inputs. I also used ChatGPT to help identify what needed to be tested, including constructor validation, status changes, enum values, and getters. I reviewed the suggested code and used it to better understand the implementation before incorporating it into the project. Additionally, I used ChatGPT to help develop an overview of my assigned responsibilities and understand how my classes fit into the overall project design.
