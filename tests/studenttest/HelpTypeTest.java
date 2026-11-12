@@ -2,6 +2,7 @@ package studenttest;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
+import student.HelpType;
 
 public class HelpTypeTest {
      @Test
@@ -10,7 +11,7 @@ public class HelpTypeTest {
         HelpType[] types = HelpType.values();
 
         assertEquals(4, types.length);
-        assertEquals(HelpType.QUICK_QUESTION, types[0]);
+        assertEquals(HelpType.OTHER, types[0]);
         assertEquals(HelpType.CONCEPT, types[1]);
         assertEquals(HelpType.DEBUGGING, types[2]);
         assertEquals(HelpType.SETUP, types[3]);
@@ -20,7 +21,7 @@ public class HelpTypeTest {
     public void testGetLabel()
     {
         assertEquals("Quick Question",
-            HelpType.QUICK_QUESTION.getLabel());
+            HelpType.OTHER.getLabel());
 
         assertEquals("Concept",
             HelpType.CONCEPT.getLabel());
@@ -35,7 +36,7 @@ public class HelpTypeTest {
     @Test
     public void testGetMinutes()
     {
-        assertEquals(5, HelpType.QUICK_QUESTION.getMinutes());
+        assertEquals(5, HelpType.OTHER.getMinutes());
         assertEquals(10, HelpType.CONCEPT.getMinutes());
         assertEquals(15, HelpType.DEBUGGING.getMinutes());
         assertEquals(5, HelpType.SETUP.getMinutes());
@@ -48,7 +49,7 @@ public class HelpTypeTest {
 
         types[0] = HelpType.SETUP;
 
-        assertEquals(HelpType.QUICK_QUESTION,
+        assertEquals(HelpType.OTHER,
             HelpType.values()[0]);
     }
 }
