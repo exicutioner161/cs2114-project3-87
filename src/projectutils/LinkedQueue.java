@@ -84,6 +84,15 @@ public class LinkedQueue<T> {
         }
         return firstNode.data;
     }
+
+    /**
+     * Returns the first item without removing it.
+     * @return the first item in the queue
+     * @throws EmptyQueueException if the queue is empty
+     */
+    public T peek() {
+        return getFront();
+    }
     
     // ----------------------------------------------------------
     /**
