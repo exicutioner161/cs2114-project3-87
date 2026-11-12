@@ -2,38 +2,42 @@ package projectutils;
 
 // -------------------------------------------------------------------------
 /**
- *  LinkedQueue class based on class implementation. Classic FIFO structure
- *  @param <T>
+ * LinkedQueue class based on class implementation. Classic FIFO structure
  * 
- *  @author Rahul Rajendran
- *  @version Nov 5, 2026
+ * @param <T>
+ * 
+ * @author Rahul Rajendran
+ * @version Nov 5, 2026
  */
 public class LinkedQueue<T> {
     private Node<T> firstNode;
     private Node<T> lastNode;
     private int size;
-    
+
     public LinkedQueue() {
         firstNode = null;
         lastNode = null;
         size = 0;
     }
+
     /**
      * @return current size of the queue
      */
     public int size() {
         return size;
     }
+
     /**
      * @return true if the queue is empty
      */
     public boolean isEmpty() {
         return size == 0;
     }
-    
+
     // ----------------------------------------------------------
     /**
      * Adds entry to the back
+     * 
      * @param data to be added to the queue
      * @throws IllegalArgumentException if data is null
      */
@@ -41,20 +45,20 @@ public class LinkedQueue<T> {
         if (data == null) {
             throw new IllegalArgumentException("Data can't be null");
         }
-        Node<T> newNode = new Node<T>(data);
+        Node<T> newNode = new Node<>(data);
         if (isEmpty()) {
             firstNode = newNode;
-        }
-        else {
+        } else {
             lastNode.next = newNode;
         }
         lastNode = newNode;
         size++;
     }
-    
+
     // ----------------------------------------------------------
     /**
      * removes and returns first item in the queue
+     * 
      * @return the first item in the queue
      * @throws EmptyQueueException if empty
      */
@@ -70,11 +74,11 @@ public class LinkedQueue<T> {
         }
         return data;
     }
-    
-    
+
     // ----------------------------------------------------------
     /**
      * returns first item in the queue, throws exception if empty
+     * 
      * @return the first item in the queue
      * @throws EmptyQueueException if empty
      */
@@ -87,16 +91,18 @@ public class LinkedQueue<T> {
 
     /**
      * Returns the first item without removing it.
+     * 
      * @return the first item in the queue
      * @throws EmptyQueueException if the queue is empty
      */
     public T peek() {
         return getFront();
     }
-    
+
     // ----------------------------------------------------------
     /**
      * Converts queue into an array, front to back
+     * 
      * @return array of the queues items in order, empty array if empty
      */
     public Object[] toArray() {
@@ -110,7 +116,7 @@ public class LinkedQueue<T> {
         }
         return newArray;
     }
-    
+
     // ----------------------------------------------------------
     /**
      * Clears the queue and removes all elements
@@ -120,8 +126,10 @@ public class LinkedQueue<T> {
         lastNode = null;
         size = 0;
     }
+
     /**
      * Returns the queue in string format front to back ex: "[A, B, C]"
+     * 
      * @return string version of the queue
      */
     @Override
@@ -137,13 +145,13 @@ public class LinkedQueue<T> {
         }
         builder.append("]");
         return builder.toString();
-        
+
     }
-    
+
     private static class Node<T> {
         private T data;
         private Node<T> next;
-        
+
         Node(T data) {
             this.data = data;
             this.next = null;
