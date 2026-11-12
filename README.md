@@ -198,7 +198,7 @@ We'll compare this prediction with what actually changed in Deliverable 4.
 | `src/main/ConsoleViewDemo.java` | Zhaojin Gao: Requested a view-only demo. Codex drafted it and checked its input and exit behavior after the merge. Gao personally reviewed and understood the demo code. |
 | `tests/projectutilstest/LinkedQueueTest.java` | Rahul Rajendran: wrote the tests, including the enqueue-null test. |
 | `tests/maintest/OfficeHoursSessionTest.java` | Rahul Rajendran: revised it, fixing two enum constant names (`HelpType.CONCEPT`, `StudentStatus.SERVED`) so the tests compile and pass. |
-| `tests/maintest/OfficeHoursControllerTest.java` | |
+| `tests/maintest/OfficeHoursControllerTest.java` | Brian Tran: drafted with GenAI and reviewed manually |
 | `tests/maintest/OfficeHoursAppTest.java` | |
 | `tests/maintest/ConsoleViewTest.java` | Zhaojin Gao: Requested view tests. Codex drafted them and reran all 9 tests successfully after the merge. |
 | `tests/maintest/ConsoleViewDemoTest.java` | Zhaojin Gao: Requested demo exit tests. Codex drafted them and reran all 3 tests successfully after the merge. |
