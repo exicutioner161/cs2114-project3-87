@@ -2,7 +2,6 @@ package main;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import projectutils.LinkedQueue;
 import student.HelpType;
 import student.StudentRequest;
@@ -10,6 +9,9 @@ import student.StudentStatus;
 
 /**
  * Owns the office-hours waiting line and enforces its state transitions.
+ * 
+ * @author Brian Tran
+ * @version Nov 11, 2026
  */
 public class OfficeHoursSession {
     private final String pin;
@@ -19,6 +21,7 @@ public class OfficeHoursSession {
 
     /**
      * Starts an empty session protected by a PIN.
+     * 
      * @param sessionPin instructor PIN
      */
     public OfficeHoursSession(String sessionPin) {
@@ -37,6 +40,7 @@ public class OfficeHoursSession {
 
     /**
      * Adds a student to the end of the line.
+     * 
      * @param name student's name
      * @param type requested help category
      * @return the newly assigned ticket
@@ -49,6 +53,7 @@ public class OfficeHoursSession {
 
     /**
      * Gets a waiting student's one-based position.
+     * 
      * @param ticket ticket to locate
      * @return position in the waiting line
      */
@@ -67,6 +72,7 @@ public class OfficeHoursSession {
 
     /**
      * Cancels a waiting request without removing its queue entry.
+     * 
      * @param ticket ticket to cancel
      */
     public void cancel(int ticket) {
@@ -122,7 +128,7 @@ public class OfficeHoursSession {
                 waiting.add(request);
             }
         }
-        return waiting.toArray(new StudentRequest[0]);
+        return waiting.toArray(StudentRequest[]::new);
     }
 
     /** @return true when no request is waiting */

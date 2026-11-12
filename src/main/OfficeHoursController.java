@@ -3,23 +3,28 @@ package main;
 import student.HelpType;
 import student.StudentRequest;
 
+// -------------------------------------------------------------------------
 /**
  * Converts console input into session operations and displays their results.
+ * 
+ * @author Brian Tran
+ * @version Nov 11, 2026
  */
 public class OfficeHoursController {
     private static final String MENU = """
-        1. Join the line
-        2. Check position
-        3. Cancel request
-        4. Instructor menu
-        5. Quit""";
+            1. Join the line
+            2. Check position
+            3. Cancel request
+            4. Instructor menu
+            5. Quit""";
     private final OfficeHoursSession session;
     private final ConsoleView view;
 
     /**
      * Connects a session to a console view.
+     * 
      * @param session model to operate on
-     * @param view view used for input and output
+     * @param view    view used for input and output
      */
     public OfficeHoursController(OfficeHoursSession session, ConsoleView view) {
         if (session == null || view == null) {
@@ -47,8 +52,7 @@ public class OfficeHoursController {
         int choice;
         try {
             choice = Integer.parseInt(rawChoice.trim());
-        }
-        catch (NumberFormatException error) {
+        } catch (NumberFormatException error) {
             return false;
         }
         try {
@@ -57,11 +61,12 @@ public class OfficeHoursController {
                 case 2 -> showPosition();
                 case 3 -> cancel();
                 case 4 -> instructorMenu();
-                default -> { return false; }
+                default -> {
+                    return false;
+                }
             }
             return true;
-        }
-        catch (IllegalArgumentException error) {
+        } catch (IllegalArgumentException error) {
             view.showMessage(error.getMessage());
             return true;
         }
@@ -80,8 +85,7 @@ public class OfficeHoursController {
             int ticket = session.joinLine(name, type);
             view.showMessage("Your ticket is " + ticket + ".");
             showLine();
-        }
-        catch (IllegalArgumentException error) {
+        } catch (IllegalArgumentException error) {
             view.showMessage(error.getMessage());
         }
     }
@@ -102,8 +106,7 @@ public class OfficeHoursController {
                 if (choice >= 1 && choice <= types.length) {
                     return types[choice - 1];
                 }
-            }
-            catch (NumberFormatException error) {
+            } catch (NumberFormatException error) {
                 // The same message applies to non-numeric and out-of-range input.
             }
             view.showMessage("Invalid help type.");
@@ -117,8 +120,7 @@ public class OfficeHoursController {
         }
         try {
             view.showPosition("Your position is " + session.getPosition(ticket) + ".");
-        }
-        catch (IllegalArgumentException error) {
+        } catch (IllegalArgumentException error) {
             view.showMessage(error.getMessage());
         }
     }
@@ -131,8 +133,7 @@ public class OfficeHoursController {
         try {
             session.cancel(ticket);
             view.showMessage("Request cancelled.");
-        }
-        catch (IllegalArgumentException error) {
+        } catch (IllegalArgumentException error) {
             view.showMessage(error.getMessage());
         }
     }
@@ -144,8 +145,7 @@ public class OfficeHoursController {
         }
         try {
             return Integer.parseInt(raw.trim());
-        }
-        catch (NumberFormatException error) {
+        } catch (NumberFormatException error) {
             view.showMessage("Invalid ticket.");
             return null;
         }
@@ -167,8 +167,7 @@ public class OfficeHoursController {
         int action;
         try {
             action = Integer.parseInt(choice.trim());
-        }
-        catch (NumberFormatException error) {
+        } catch (NumberFormatException error) {
             invalidInputMessage();
             return;
         }
@@ -177,7 +176,8 @@ public class OfficeHoursController {
                 case 1 -> view.showMessage(format(session.callNext()));
                 case 2 -> view.showMessage(format(session.completeCurrent()));
                 case 3 -> showLine();
-                case 4 -> { }
+                case 4 -> {
+                }
                 default -> invalidInputMessage();
             }
         } catch (IllegalStateException error) {
@@ -193,7 +193,7 @@ public class OfficeHoursController {
         }
         for (int i = 0; i < waiting.length; i++) {
             view.showLine((i + 1) + ". " + waiting[i].getTicket() + " "
-                + waiting[i].getName());
+                    + waiting[i].getName());
         }
     }
 
