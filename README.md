@@ -194,14 +194,14 @@ We'll compare this prediction with what actually changed in Deliverable 4.
 | `src/main/OfficeHoursSession.java` | |
 | `src/main/OfficeHoursController.java` | |
 | `src/main/OfficeHoursApp.java` | |
-| `src/main/ConsoleView.java` | Zhaojin Gao: Codex drafted the view at Gao's request, using the group's Model/View Boundary design. |
-| `src/main/ConsoleViewDemo.java` | Zhaojin Gao: Codex drafted a view-only demo at Gao's request. |
+| `src/main/ConsoleView.java` | Zhaojin Gao: Provided the group's Model/View Boundary design to Codex and requested the view implementation. Codex drafted the code and checked its controller calls and separation from the model after the merge. |
+| `src/main/ConsoleViewDemo.java` | Zhaojin Gao: Requested a view-only demo. Codex drafted it and checked its input and exit behavior after the merge. |
 | `tests/projectutilstest/LinkedQueueTest.java` | Rahul Rajendran: wrote the tests, including the enqueue-null test. |
 | `tests/maintest/OfficeHoursSessionTest.java` | Rahul Rajendran: revised it, fixing two enum constant names (`HelpType.CONCEPT`, `StudentStatus.SERVED`) so the tests compile and pass. |
 | `tests/maintest/OfficeHoursControllerTest.java` | |
 | `tests/maintest/OfficeHoursAppTest.java` | |
-| `tests/maintest/ConsoleViewTest.java` | Zhaojin Gao: Codex drafted and ran the view tests at Gao's request. |
-| `tests/maintest/ConsoleViewDemoTest.java` | Zhaojin Gao: Codex drafted and ran the demo exit tests at Gao's request. |
+| `tests/maintest/ConsoleViewTest.java` | Zhaojin Gao: Requested view tests. Codex drafted them and reran all 9 tests successfully after the merge. |
+| `tests/maintest/ConsoleViewDemoTest.java` | Zhaojin Gao: Requested demo exit tests. Codex drafted them and reran all 3 tests successfully after the merge. |
 | `tests/studenttest/StudentRequestTest.java` | |
 | `tests/studenttest/HelpTypeTest.java` | |
 | `tests/studenttest/StudentStatusTest.java` | |
@@ -210,7 +210,7 @@ We'll compare this prediction with what actually changed in Deliverable 4.
 
 **Rahul Rajendran:** I used Claude to help build `LinkedQueue`. I also used it to find why Eclipse wasn't compiling the project: the Eclipse project files had been removed from the repo, and the compiler level was set below Java 17. Claude compiled and ran our code and tests to find the two broken enum names in `OfficeHoursSessionTest`. It also helped me write this README by checking it against the rubric, our Scope, our Spec, and the actual code and git history. I reviewed every change before committing it.
 
-**Zhaojin Gao:** I asked Codex to continue my Model/View Boundary part using simple Java and simple English. It read our design extract and the current repository, filled in `ConsoleView`, added a demo, and wrote view tests. It also drafted the first version of the README's view sections and predicted which classes a skip/requeue feature could change. The model and queue implementations were left unchanged.
+**Zhaojin Gao:** I asked Codex to continue my Model/View Boundary part using simple Java and simple English. It read our design extract and the current repository, filled in `ConsoleView`, added a demo, and wrote view tests. It also drafted the first version of the README's view sections and predicted which classes a skip/requeue feature could change. The model and queue implementations were left unchanged. On November 11, I asked Codex to check the merged code and update my contribution notes. Codex checked the view boundary and controller calls, ran all 36 existing tests successfully, and checked the join, cancel, serve, complete, empty-line, and quit flow. Codex performed this review and test run. The tests do not cover every input case; the missing tests are listed above.
 
 **Brian Tran:**
 
