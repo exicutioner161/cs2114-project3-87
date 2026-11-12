@@ -10,7 +10,7 @@ import student.StudentRequest;
  * @author Brian Tran
  * @version Nov 11, 2026
  */
-// Note: Drafted and reviewed using Copilot
+// Note: Drafted with Copilot and reviewed manually
 public class OfficeHoursController {
     private static final String MENU = """
             1. Join the line
