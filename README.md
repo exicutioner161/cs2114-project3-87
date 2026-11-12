@@ -212,6 +212,6 @@ We'll compare this prediction with what actually changed in Deliverable 4.
 
 **Zhaojin Gao:** I asked Codex to continue my Model/View Boundary part using simple Java and simple English. It read our design extract and the current repository, filled in `ConsoleView`, added a demo, and wrote view tests. It also drafted the first version of the README's view sections and predicted which classes a skip/requeue feature could change. The model and queue implementations were left unchanged. On November 11, I asked Codex to check the merged code and update my contribution notes. Codex checked the view boundary and controller calls, ran all 36 existing tests successfully, and checked the join, cancel, serve, complete, empty-line, and quit flow. I then personally reviewed the code for my part. I understood how it works and found it correct. Codex ran the tests described above. The tests do not cover every input case; the missing tests are listed above.
 
-**Brian Tran:**
+**Brian Tran:** I used Copilot to create basic drafts of `OfficeHoursController` and `OfficeHoursSession` using the spec document as context, then I manually reviewed the code afterwards.
 
 **Zayd Pathan:**
