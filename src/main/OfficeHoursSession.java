@@ -109,7 +109,7 @@ public class OfficeHoursSession {
         if (currentStudent == null) {
             throw new IllegalStateException("No student is being helped.");
         }
-        currentStudent.setStatus(StudentStatus.COMPLETED);
+        currentStudent.setStatus(StudentStatus.SERVED);
         StudentRequest completed = currentStudent;
         currentStudent = null;
         return completed;
