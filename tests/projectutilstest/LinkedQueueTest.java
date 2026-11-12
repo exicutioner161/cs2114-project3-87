@@ -1,7 +1,15 @@
 package projectutilstest;
-import student.TestCase;
+
 import projectutils.EmptyQueueException;
 import projectutils.LinkedQueue;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 // -------------------------------------------------------------------------
 /**
@@ -10,18 +18,20 @@ import projectutils.LinkedQueue;
  *  @author Rahul Rajendran
  *  @version Nov 5, 2026
  */
-public class LinkedQueueTest extends TestCase {
+public class LinkedQueueTest {
     private LinkedQueue<String> queue;
     
     /**
      * creates empty queue before each test
      */
+    @BeforeEach
     public void setUp() {
-        queue = new LinkedQueue<String>();
+        queue = new LinkedQueue<>();
     }
     /**
      * tests isEmpty when full
      */
+    @Test
     public void testIsEmptyFull() {
         queue.enqueue("A");
         assertFalse(queue.isEmpty());
@@ -29,12 +39,14 @@ public class LinkedQueueTest extends TestCase {
     /**
      * tests isEmpty
      */
+    @Test
     public void testIsEmpty() {
         assertTrue(queue.isEmpty());
     }
     /**
      * tests toArray when queue is empty
      */
+    @Test
     public void testToArrayEmpty() {
         Object[] test = queue.toArray();
         assertEquals(0, test.length);
@@ -42,6 +54,7 @@ public class LinkedQueueTest extends TestCase {
     /**
      * tests toArray on a queue with entries
      */
+    @Test
     public void testToArray() {
         queue.enqueue("A");
         queue.enqueue("B");
@@ -55,12 +68,14 @@ public class LinkedQueueTest extends TestCase {
     /**
      * tests toString on empty queue
      */
+    @Test
     public void testToStringEmpty() {
         assertEquals("[]", queue.toString());
     }
     /**
      * tests toString on a queue with one entry
      */
+    @Test
     public void testToStringOne() {
         queue.enqueue("A");
         assertEquals("[A]", queue.toString());
@@ -68,6 +83,7 @@ public class LinkedQueueTest extends TestCase {
     /**
      * tests toString on multiple entries
      */
+    @Test
     public void testToString() {
         queue.enqueue("A");
         queue.enqueue("B");
@@ -77,6 +93,7 @@ public class LinkedQueueTest extends TestCase {
     /**
      * tests clear
      */
+    @Test
     public void testClear() {
         queue.enqueue("A");
         queue.enqueue("A");
@@ -87,6 +104,7 @@ public class LinkedQueueTest extends TestCase {
     /**
      * tests getFront on empty queue
      */
+    @Test
     public void testGetFrontEmpty() {
         Exception exception = null;
         try {
@@ -100,6 +118,7 @@ public class LinkedQueueTest extends TestCase {
     /**
      * tests getFront on queue with one entry
      */
+    @Test
     public void testGetFrontOne() {
         queue.enqueue("A");
         assertEquals("A", queue.getFront());
@@ -107,6 +126,7 @@ public class LinkedQueueTest extends TestCase {
     /**
      * tests getFront on queue with multiple entries
      */
+    @Test
     public void testGetFront() {
         queue.enqueue("A");
         queue.enqueue("B");
@@ -117,6 +137,7 @@ public class LinkedQueueTest extends TestCase {
     /**
      * tests enqueue on empty queue
      */
+    @Test
     public void testEnqueueEmpty() {
         queue.enqueue("A");
         assertEquals(1, queue.size());
@@ -125,6 +146,7 @@ public class LinkedQueueTest extends TestCase {
     /**
      * tests enqueue keeps right order when multiple entries are added
      */
+    @Test
     public void testEnqueueMultiple() {
         queue.enqueue("A");
         queue.enqueue("B");
@@ -135,6 +157,7 @@ public class LinkedQueueTest extends TestCase {
     /**
      * tests dequeue on empty queue
      */
+    @Test
     public void testDequeueEmpty() {
         Exception exception = null;
         try {
@@ -148,6 +171,7 @@ public class LinkedQueueTest extends TestCase {
     /**
      * tests dequeue on queue with one entry
      */
+    @Test
     public void testDequeueOne() {
         queue.enqueue("A");
         String dum = queue.dequeue();
@@ -158,6 +182,7 @@ public class LinkedQueueTest extends TestCase {
      * tests dequeue on queue with multiple entries and that they're held
      * in correct order
      */
+    @Test
     public void testDequeueFull() {
         queue.enqueue("A");
         queue.enqueue("B");
@@ -169,6 +194,7 @@ public class LinkedQueueTest extends TestCase {
     /**
      * tests multiple dequeues on queue with multiple entries
      */
+    @Test
     public void testDequeueMultiple() {
         queue.enqueue("A");
         queue.enqueue("B");
@@ -183,6 +209,7 @@ public class LinkedQueueTest extends TestCase {
     /**
      * tests enqueue on bad input
      */
+    @Test
     public void testEnqueueNull() {
         Exception exception = null;
         try {
