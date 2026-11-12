@@ -144,7 +144,7 @@ public class OfficeHoursController {
             return null;
         }
         try {
-            return Integer.parseInt(raw.trim());
+            return Integer.valueOf(raw.trim());
         } catch (NumberFormatException error) {
             view.showMessage("Invalid ticket.");
             return null;
