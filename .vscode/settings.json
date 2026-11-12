@@ -1,6 +1,8 @@
 {
     "java.project.sourcePaths": [
-        "src",
+        "src"
+    ],
+    "java.project.testSourcePaths": [
         "tests"
     ],
     "java.project.outputPath": "bin",

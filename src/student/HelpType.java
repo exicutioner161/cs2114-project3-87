@@ -39,4 +39,22 @@ public enum HelpType {
     public int getDefaultMinutes() {
         return defaultMinutes;
     }
+
+    private final String label;
+    private final int minutes;
+
+    HelpType(String label, int minutes) {
+        this.label = label;
+        this.minutes = minutes;
+    }
+
+    /** @return the user-facing category label */
+    public String getLabel() {
+        return label;
+    }
+
+    /** @return the default time estimate in minutes */
+    public int getMinutes() {
+        return minutes;
+    }
 }
