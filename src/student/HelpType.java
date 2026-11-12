@@ -1,35 +1,42 @@
 package student;
 
+// -------------------------------------------------------------------------
+/**
+ *  Classifies the Helptype, alongside the default time for a time of request
+ * 
+ *  @author Zayd Pathan
+ *  @version Nov 11, 2026
+ */
 public enum HelpType {
-    QUICK_QUESTION("Quick Question", 5),
-    CONCEPT("Concept", 10),
-    DEBUGGING("Debugging", 15),
-    SETUP("Setup", 5);
-
-
-    SETUP("Setup", 5);
-
-    private final String label;
-    private final int minutes;
     /**
-     * 
-     * @param Label tells what kind of question u have
-     * @param minutes how long it would take
+     * For when you are having trouble with your code
      */
-    HelpType(String label, int minutes)
-    {
-        this.label = label;
-        this.minutes = minutes;
+    DEBUGGING(10),
+    /**
+     * Specific exam topic you're having problems with
+     */
+    CONCEPT(5),
+    /**
+     * Eclipse setup, git issues, or build path
+     */
+    SETUP(8),
+    /**
+     * Other requests
+     */
+    OTHER(7);
+    
+    
+    private final int defaultMinutes;
+    /**
+     * creates a HelpType with default minutes assigned
+     */
+    HelpType(int defaultMinutes) {
+        this.defaultMinutes = defaultMinutes;
     }
-
-    public String getLabel()
-    {
-        return label;
+    /**
+     * returns the default minutes for that HelpType
+     */
+    public int getDefaultMinutes() {
+        return defaultMinutes;
     }
-
-    public int getMinutes()
-    {
-        return minutes;
-    }
-}
 }
