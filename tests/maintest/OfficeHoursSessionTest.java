@@ -15,7 +15,7 @@ public class OfficeHoursSessionTest {
     @Test
     public void cancelledStudentsAreSkipped() {
         OfficeHoursSession session = new OfficeHoursSession("42");
-        int first = session.joinLine("Alex", HelpType.QUICK_QUESTION);
+        int first = session.joinLine("Alex", HelpType.CONCEPT);
         session.joinLine("Blair", HelpType.DEBUGGING);
         session.cancel(first);
 
@@ -31,7 +31,7 @@ public class OfficeHoursSessionTest {
         session.joinLine("Blair", HelpType.SETUP);
 
         session.callNext();
-        assertEquals(StudentStatus.COMPLETED, session.completeCurrent().getStatus());
+        assertEquals(StudentStatus.SERVED, session.completeCurrent().getStatus());
         assertEquals("Blair", session.callNext().getName());
     }
 
