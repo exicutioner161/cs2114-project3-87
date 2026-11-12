@@ -191,9 +191,9 @@ We'll compare this prediction with what actually changed in Deliverable 4.
 | `src/student/StudentRequest.java` | |
 | `src/student/HelpType.java` | |
 | `src/student/StudentStatus.java` | |
-| `src/main/OfficeHoursSession.java` | |
-| `src/main/OfficeHoursController.java` | |
-| `src/main/OfficeHoursApp.java` | |
+| `src/main/OfficeHoursSession.java` | Brian Tran: drafted using GenAI and reviewed manually |
+| `src/main/OfficeHoursController.java` | Brian Tran: drafted using GenAI and reviewed manually |
+| `src/main/OfficeHoursApp.java` | Brian Tran: wrote manually |
 | `src/main/ConsoleView.java` | Zhaojin Gao: Provided the group's Model/View Boundary design to Codex and requested the view implementation. Codex drafted the code and checked its controller calls and separation from the model after the merge. Gao personally reviewed the code and confirmed that he understood it and found it correct. |
 | `src/main/ConsoleViewDemo.java` | Zhaojin Gao: Requested a view-only demo. Codex drafted it and checked its input and exit behavior after the merge. Gao personally reviewed and understood the demo code. |
 | `tests/projectutilstest/LinkedQueueTest.java` | Rahul Rajendran: wrote the tests, including the enqueue-null test. |
