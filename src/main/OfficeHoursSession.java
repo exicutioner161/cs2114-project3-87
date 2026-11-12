@@ -13,6 +13,7 @@ import student.StudentStatus;
  * @author Brian Tran
  * @version Nov 11, 2026
  */
+// Note: Drafted and reviewed using Copilot
 public class OfficeHoursSession {
     private final String pin;
     private final LinkedQueue<StudentRequest> line;
