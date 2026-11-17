@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -24,6 +25,69 @@ import student.StudentStatus;
  * Gao personally reviewed the tests and confirmed that he understands them.
  */
 public class OfficeHoursControllerTest {
+
+    /**
+     * Session variant that exposes controller exception handlers to tests.
+     */
+    private static class ThrowingSession extends OfficeHoursSession {
+        /** Creates a session with the normal valid PIN. */
+        ThrowingSession() {
+            super("42");
+        }
+
+        @Override
+        public boolean checkPin(String attempt) {
+            throw new IllegalArgumentException("PIN check failed.");
+        }
+
+        @Override
+        public int joinLine(String name, HelpType type) {
+            throw new IllegalArgumentException("Join failed.");
+        }
+    }
+
+    /** Exercises the main-choice handler for an illegal session operation. */
+    @Test
+    public void mainChoiceReportsIllegalArgumentException() {
+        String output = runInput(new ThrowingSession(), "4\n42\n5\n");
+
+        assertTrue(output.contains("PIN check failed."));
+    }
+
+    /** Exercises the join handler for an illegal session operation. */
+    @Test
+    public void joinReportsIllegalArgumentException() {
+        String output = runInput(new ThrowingSession(), "1\nAna\n1\n5\n");
+
+        assertTrue(output.contains("Join failed."));
+    }
+
+    /** Rejects a controller with no session model. */
+    @Test
+    public void nullSessionIsRejected() {
+        ConsoleView view = new ConsoleView(new Scanner(""), System.out);
+
+        assertThrows(IllegalArgumentException.class,
+            () -> new OfficeHoursController(null, view));
+    }
+
+    /** Rejects a controller with no view. */
+    @Test
+    public void nullViewIsRejected() {
+        OfficeHoursSession session = new OfficeHoursSession("42");
+
+        assertThrows(IllegalArgumentException.class,
+            () -> new OfficeHoursController(session, null));
+    }
+
+    /** Reports an unknown positive ticket and returns to the main menu. */
+    @Test
+    public void positionReportsUnknownPositiveTicket() {
+        String output = runInput(new OfficeHoursSession("42"), "2\n999\n5\n");
+
+        assertTrue(output.contains("Ticket is not waiting. "
+            + "Enter a waiting ticket."));
+    }
 
     /**
      * Runs the controller with test input instead of keyboard input.

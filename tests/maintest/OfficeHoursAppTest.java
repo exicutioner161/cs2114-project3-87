@@ -2,9 +2,11 @@ package maintest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -24,6 +26,36 @@ import main.OfficeHoursApp;
  * @version Nov 16, 2026
  */
 public class OfficeHoursAppTest {
+
+    /** Executes the app's implicit no-argument constructor. */
+    @Test
+    public void appCanBeConstructed() {
+        assertNotNull(new OfficeHoursApp());
+    }
+
+    /**
+     * The application entry point uses the default console view and can quit
+     * immediately when its standard input contains the quit choice.
+     */
+    @Test
+    public void mainUsesDefaultConsoleView() {
+        java.io.InputStream originalInput = System.in;
+        PrintStream originalOutput = System.out;
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        try {
+            System.setIn(new ByteArrayInputStream("9876\n5\n".getBytes()));
+            System.setOut(new PrintStream(output));
+
+            OfficeHoursApp.main(new String[0]);
+
+            assertTrue(output.toString().contains("PIN set. Office hours are open."));
+            assertTrue(output.toString().contains("5. Quit"));
+        }
+        finally {
+            System.setIn(originalInput);
+            System.setOut(originalOutput);
+        }
+    }
 
     /**
      * Runs the app on the given input and returns everything it printed.
