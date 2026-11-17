@@ -198,7 +198,7 @@ We'll compare this prediction with what actually changed in Deliverable 4.
 | `src/main/ConsoleViewDemo.java` | Zhaojin Gao: Requested a view-only demo. Codex drafted it and checked its input and exit behavior after the merge. Gao personally reviewed and understood the demo code. |
 | `tests/projectutilstest/LinkedQueueTest.java` | Rahul Rajendran: wrote the tests, including the enqueue-null test. |
 | `tests/maintest/OfficeHoursSessionTest.java` | Rahul Rajendran: revised it, fixing two enum constant names (`HelpType.CONCEPT`, `StudentStatus.SERVED`) so the tests compile and pass. |
-| `tests/maintest/OfficeHoursControllerTest.java` | Brian Tran: drafted with GenAI and reviewed manually |
+| `tests/maintest/OfficeHoursControllerTest.java` | Brian Tran: drafted the original tests with GenAI and reviewed manually. Zhaojin Gao: requested 33 additional D4 controller tests, personally reviewed all of the added tests, and confirmed that he understood them and found them correct. Codex drafted the additions, added method explanations, and ran the tests. |
 | `tests/maintest/OfficeHoursAppTest.java` | |
 | `tests/maintest/ConsoleViewTest.java` | Zhaojin Gao: Requested view tests. Codex drafted them and reran all 9 tests successfully after the merge. |
 | `tests/maintest/ConsoleViewDemoTest.java` | Zhaojin Gao: Requested demo exit tests. Codex drafted them and reran all 3 tests successfully after the merge. |
@@ -216,3 +216,8 @@ We'll compare this prediction with what actually changed in Deliverable 4.
 
 **Zayd Pathan:**
 I used ChatGPT to help implement the StudentRequest, HelpType, and StudentStatus classes and create their corresponding JUnit test classes. I provided the project specification and asked for explanations of how to structure the classes, implement methods, and handle invalid inputs. I also used ChatGPT to help identify what needed to be tested, including constructor validation, status changes, enum values, and getters. I reviewed the suggested code and used it to better understand the implementation before incorporating it into the project. Additionally, I used ChatGPT to help develop an overview of my assigned responsibilities and understand how my classes fit into the overall project design.
+### Gao D4 controller test update — November 16, 2026
+
+I asked Codex to add controller tests using simple Java. It drafted 33 additional tests for normal menu actions, bad input, and input ending at prompts. I personally reviewed all of the added tests, understood how they work, and found them correct. At my request, Codex also added simple explanations of the test helper and important checks. The controller test file now has 36 tests. Codex compiled the project and ran all 91 tests successfully.
+
+These tests run the real controller with a real session and a console view using test input. They check both printed messages and model state. They do not replace the separate model tests. Requeue tests are still pending Brian's implementation. See [Gao's review notes](GAO_D4_REVIEW.md) for explanations and the remaining requeue test plan.
