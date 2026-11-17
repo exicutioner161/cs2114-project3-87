@@ -127,7 +127,7 @@ public class OfficeHoursController {
             }
             try {
                 view.showPosition("Your position is "
-                    + session.getPosition(ticket) + ".");
+                        + session.getPosition(ticket) + ".");
                 return;
             } catch (IllegalArgumentException error) {
                 view.showMessage(error.getMessage() + " Enter a waiting ticket.");
@@ -179,9 +179,13 @@ public class OfficeHoursController {
             return;
         }
         while (true) {
-            String choice = view.readLine(
-                "1. Call next  2. Complete current  3. Show line"
-                + "  4. Requeue current  5. Back: ");
+            String choice = view.readLine("""
+                    1. Call next
+                    2. Complete current
+                    3. Show line
+                    4. Requeue current
+                    5. Back:
+                    ---------""");
             if (choice == null || "5".equals(choice.trim())) {
                 return;
             }
