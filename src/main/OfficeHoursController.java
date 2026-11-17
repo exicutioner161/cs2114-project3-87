@@ -73,9 +73,16 @@ public class OfficeHoursController {
     }
 
     private void join() {
-        String name = view.readLine("Name: ");
-        if (name == null) {
-            return;
+        String name;
+        while (true) {
+            name = view.readLine("Name: ");
+            if (name == null) {
+                return;
+            }
+            if (!name.trim().isEmpty()) {
+                break;
+            }
+            view.showMessage("Name can't be blank. Enter a name.");
         }
         HelpType type = readHelpType();
         if (type == null) {
@@ -84,7 +91,6 @@ public class OfficeHoursController {
         try {
             int ticket = session.joinLine(name, type);
             view.showMessage("Your ticket is " + ticket + ".");
-            showLine();
         } catch (IllegalArgumentException error) {
             view.showMessage(error.getMessage());
         }
@@ -114,40 +120,52 @@ public class OfficeHoursController {
     }
 
     private void showPosition() {
-        Integer ticket = readTicket();
-        if (ticket == null) {
-            return;
-        }
-        try {
-            view.showPosition("Your position is " + session.getPosition(ticket) + ".");
-        } catch (IllegalArgumentException error) {
-            view.showMessage(error.getMessage());
+        while (true) {
+            Integer ticket = readTicket();
+            if (ticket == null) {
+                return;
+            }
+            try {
+                view.showPosition("Your position is "
+                    + session.getPosition(ticket) + ".");
+                return;
+            } catch (IllegalArgumentException error) {
+                view.showMessage(error.getMessage() + " Enter a waiting ticket.");
+            }
         }
     }
 
     private void cancel() {
-        Integer ticket = readTicket();
-        if (ticket == null) {
-            return;
-        }
-        try {
-            session.cancel(ticket);
-            view.showMessage("Request cancelled.");
-        } catch (IllegalArgumentException error) {
-            view.showMessage(error.getMessage());
+        while (true) {
+            Integer ticket = readTicket();
+            if (ticket == null) {
+                return;
+            }
+            try {
+                session.cancel(ticket);
+                view.showMessage("Request cancelled.");
+                return;
+            } catch (IllegalArgumentException error) {
+                view.showMessage(error.getMessage() + " Enter a waiting ticket.");
+            }
         }
     }
 
     private Integer readTicket() {
-        String raw = view.readLine("Ticket: ");
-        if (raw == null) {
-            return null;
-        }
-        try {
-            return Integer.valueOf(raw.trim());
-        } catch (NumberFormatException error) {
-            view.showMessage("Invalid ticket.");
-            return null;
+        while (true) {
+            String raw = view.readLine("Ticket: ");
+            if (raw == null) {
+                return null;
+            }
+            try {
+                int ticket = Integer.parseInt(raw.trim());
+                if (ticket > 0) {
+                    return ticket;
+                }
+            } catch (NumberFormatException error) {
+                // Invalid ticket messages below cover all bad formats.
+            }
+            view.showMessage("Invalid ticket. Enter a positive ticket number.");
         }
     }
 
@@ -160,30 +178,31 @@ public class OfficeHoursController {
             view.showMessage("Access denied.");
             return;
         }
-        String choice = view.readLine(
-            "1. Call next  2. Complete current  3. Show line"
-            + "  4. Requeue current  5. Back: ");
-        if (choice == null) {
-            return;
-        }
-        int action;
-        try {
-            action = Integer.parseInt(choice.trim());
-        } catch (NumberFormatException error) {
-            invalidInputMessage();
-            return;
-        }
-        try {
-            switch (action) {
-                case 1 -> view.showMessage(format(session.callNext()));
-                case 2 -> view.showMessage(format(session.completeCurrent()));
-                case 3 -> showLine();
-                case 4 -> view.showMessage(format(session.requeueCurrent()));
-                case 5 -> { }
-                default -> invalidInputMessage();
+        while (true) {
+            String choice = view.readLine(
+                "1. Call next  2. Complete current  3. Show line"
+                + "  4. Requeue current  5. Back: ");
+            if (choice == null || "5".equals(choice.trim())) {
+                return;
             }
-        } catch (IllegalStateException error) {
-            view.showMessage(error.getMessage());
+            int action;
+            try {
+                action = Integer.parseInt(choice.trim());
+            } catch (NumberFormatException error) {
+                invalidInputMessage();
+                continue;
+            }
+            try {
+                switch (action) {
+                    case 1 -> view.showMessage(format(session.callNext()));
+                    case 2 -> view.showMessage(format(session.completeCurrent()));
+                    case 3 -> showLine();
+                    case 4 -> view.showMessage(format(session.requeueCurrent()));
+                    default -> invalidInputMessage();
+                }
+            } catch (IllegalStateException error) {
+                view.showMessage(error.getMessage());
+            }
         }
     }
 
