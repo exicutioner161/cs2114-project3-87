@@ -13,7 +13,6 @@ import student.StudentStatus;
  * @author Brian Tran
  * @version Nov 11, 2026
  */
-// Note: Drafted with Copilot and reviewed manually
 public class OfficeHoursSession {
     private final String pin;
     private final LinkedQueue<StudentRequest> line;
@@ -109,6 +108,22 @@ public class OfficeHoursSession {
         StudentRequest completed = currentStudent;
         currentStudent = null;
         return completed;
+    }
+
+    /**
+     * Sends the currently helped request back to the waiting line.
+     *
+     * @return the requeued request
+     */
+    public StudentRequest requeueCurrent() {
+        if (currentStudent == null) {
+            throw new IllegalStateException("No student is being helped.");
+        }
+        currentStudent.setStatus(StudentStatus.WAITING);
+        line.enqueue(currentStudent);
+        StudentRequest requeued = currentStudent;
+        currentStudent = null;
+        return requeued;
     }
 
     /** @return the current request, or null when the instructor is idle */

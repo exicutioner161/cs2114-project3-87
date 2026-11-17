@@ -350,9 +350,38 @@ public class OfficeHoursControllerTest {
     }
 
     @Test
+    public void instructorCanRequeueCurrentStudentToBack() {
+        OfficeHoursSession session = new OfficeHoursSession("42");
+        int first = session.joinLine("Ana", HelpType.CONCEPT);
+        int second = session.joinLine("Ben", HelpType.OTHER);
+        session.callNext();
+
+        String output = runInput(session, "4\n42\n4\n5\n");
+
+        assertTrue(output.contains("Ticket " + first + ": Ana"));
+        assertTrue(output.contains("4. Requeue current"));
+        assertNull(session.getCurrentStudent());
+        assertEquals(second, session.getWaitingStudents()[0].getTicket());
+        assertEquals(first, session.getWaitingStudents()[1].getTicket());
+        assertEquals(StudentStatus.WAITING,
+            session.getWaitingStudents()[1].getStatus());
+    }
+
+    @Test
+    public void instructorRequeueReportsNoCurrentStudent() {
+        OfficeHoursSession session = new OfficeHoursSession("42");
+
+        String output = runInput(session, "4\n42\n4\n5\n");
+
+        assertTrue(output.contains("No student is being helped."));
+        assertNull(session.getCurrentStudent());
+        assertTrue(session.isLineEmpty());
+    }
+
+    @Test
     public void showEmptyLineAndBackDoNotChangeSession() {
         OfficeHoursSession session = new OfficeHoursSession("42");
-        String output = runInput(session, "4\n42\n3\n4\n42\n4\n5\n");
+        String output = runInput(session, "4\n42\n3\n4\n42\n5\n5\n");
         assertTrue(output.contains("The line is empty."));
         assertFalse(output.contains("Invalid input!"));
         assertTrue(session.isLineEmpty());
