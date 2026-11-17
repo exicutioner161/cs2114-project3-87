@@ -184,8 +184,9 @@ public class OfficeHoursController {
                     2. Complete current
                     3. Show line
                     4. Requeue current
-                    5. Back:
-                    ---------""");
+                    5. Back
+                    ------------------
+                    """);
             if (choice == null || "5".equals(choice.trim())) {
                 return;
             }
