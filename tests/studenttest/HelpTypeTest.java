@@ -1,7 +1,7 @@
 package studenttest;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 import student.HelpType;
 
 public class HelpTypeTest {
@@ -11,22 +11,22 @@ public class HelpTypeTest {
         HelpType[] types = HelpType.values();
 
         assertEquals(4, types.length);
-        assertEquals(HelpType.OTHER, types[0]);
+        assertEquals(HelpType.DEBUGGING, types[0]);
         assertEquals(HelpType.CONCEPT, types[1]);
-        assertEquals(HelpType.DEBUGGING, types[2]);
-        assertEquals(HelpType.SETUP, types[3]);
+        assertEquals(HelpType.SETUP, types[2]);
+        assertEquals(HelpType.OTHER, types[3]);
     }
 
     @Test
     public void testGetLabel()
     {
-        assertEquals("Quick Question",
+        assertEquals("Other",
             HelpType.OTHER.getLabel());
 
         assertEquals("Concept",
             HelpType.CONCEPT.getLabel());
 
-        assertEquals("Debugging",
+        assertEquals("Debug",
             HelpType.DEBUGGING.getLabel());
 
         assertEquals("Setup",
@@ -36,10 +36,10 @@ public class HelpTypeTest {
     @Test
     public void testGetMinutes()
     {
-        assertEquals(5, HelpType.OTHER.getMinutes());
-        assertEquals(10, HelpType.CONCEPT.getMinutes());
-        assertEquals(15, HelpType.DEBUGGING.getMinutes());
-        assertEquals(5, HelpType.SETUP.getMinutes());
+        assertEquals(7, HelpType.OTHER.getMinutes());
+        assertEquals(5, HelpType.CONCEPT.getMinutes());
+        assertEquals(10, HelpType.DEBUGGING.getMinutes());
+        assertEquals(8, HelpType.SETUP.getMinutes());
     }
 
     @Test
@@ -49,7 +49,7 @@ public class HelpTypeTest {
 
         types[0] = HelpType.SETUP;
 
-        assertEquals(HelpType.OTHER,
+        assertEquals(HelpType.DEBUGGING,
             HelpType.values()[0]);
     }
 }

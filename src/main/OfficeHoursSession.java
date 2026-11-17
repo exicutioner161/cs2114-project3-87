@@ -34,11 +34,6 @@ public class OfficeHoursSession {
         nextTicket = 1;
     }
 
-    /** Creates a session with a default PIN for the application entry point. */
-    public OfficeHoursSession() {
-        this("1234");
-    }
-
     /**
      * Adds a student to the end of the line.
      * 

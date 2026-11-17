@@ -220,4 +220,115 @@ public class LinkedQueueTest {
         }
         assertNotNull(exception);
     }
+
+    /**
+     * tests that emptying the queue resets both front and rear, so the
+     * queue works normally when it is refilled
+     */
+    @Test
+    public void testRefillAfterEmptying() {
+        queue.enqueue("A");
+        assertEquals("A", queue.dequeue());
+        assertTrue(queue.isEmpty());
+
+        queue.enqueue("B");
+        queue.enqueue("C");
+        assertEquals(2, queue.size());
+        assertEquals("B", queue.getFront());
+        assertEquals("[B, C]", queue.toString());
+        assertEquals("B", queue.dequeue());
+        assertEquals("C", queue.dequeue());
+        assertTrue(queue.isEmpty());
+    }
+
+    /**
+     * tests that clear resets the queue so it can be reused
+     */
+    @Test
+    public void testRefillAfterClear() {
+        queue.enqueue("A");
+        queue.enqueue("B");
+        queue.clear();
+
+        queue.enqueue("C");
+        assertEquals(1, queue.size());
+        assertEquals("C", queue.getFront());
+        assertEquals("C", queue.dequeue());
+        assertTrue(queue.isEmpty());
+    }
+
+    /**
+     * tests that first-in, first-out order holds when enqueues and
+     * dequeues are interleaved
+     */
+    @Test
+    public void testInterleavedOrder() {
+        queue.enqueue("A");
+        queue.enqueue("B");
+        assertEquals("A", queue.dequeue());
+        queue.enqueue("C");
+        assertEquals("B", queue.dequeue());
+        queue.enqueue("D");
+        queue.enqueue("E");
+        assertEquals("C", queue.dequeue());
+
+        Object[] rest = queue.toArray();
+        assertEquals(2, rest.length);
+        assertEquals("D", rest[0]);
+        assertEquals("E", rest[1]);
+        assertEquals("D", queue.getFront());
+        assertEquals(2, queue.size());
+    }
+
+    /**
+     * tests interleaving that empties the queue in the middle, then
+     * keeps going, which exercises the rear reset during normal use
+     */
+    @Test
+    public void testInterleavedThroughEmpty() {
+        queue.enqueue("A");
+        assertEquals("A", queue.dequeue());
+        queue.enqueue("B");
+        queue.enqueue("C");
+        assertEquals("B", queue.dequeue());
+        assertEquals("C", queue.dequeue());
+        assertTrue(queue.isEmpty());
+        queue.enqueue("D");
+        queue.enqueue("E");
+        assertEquals("D", queue.dequeue());
+        assertEquals("E", queue.getFront());
+        assertEquals(1, queue.size());
+    }
+
+    /**
+     * tests that a failed dequeue on an empty queue leaves it usable
+     */
+    @Test
+    public void testDequeueEmptyThenEnqueue() {
+        try {
+            queue.dequeue();
+        }
+        catch (EmptyQueueException e) {
+            // expected
+        }
+        queue.enqueue("A");
+        assertEquals(1, queue.size());
+        assertEquals("A", queue.getFront());
+    }
+
+    /**
+     * tests that a rejected null enqueue does not change the queue
+     */
+    @Test
+    public void testEnqueueNullLeavesQueueUnchanged() {
+        queue.enqueue("A");
+        try {
+            queue.enqueue(null);
+        }
+        catch (IllegalArgumentException e) {
+            // expected
+        }
+        assertEquals(1, queue.size());
+        assertEquals("[A]", queue.toString());
+    }
 }

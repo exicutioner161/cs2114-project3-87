@@ -1,8 +1,8 @@
 package studenttest;
 //package student;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 import student.StudentStatus;
 
 public class StudentStatusTest
@@ -29,15 +29,16 @@ public class StudentStatusTest
             StudentStatus.valueOf("BEING_HELPED"));
 
         assertEquals(StudentStatus.SERVED,
-            StudentStatus.valueOf("COMPLETED"));
+            StudentStatus.valueOf("SERVED"));
 
         assertEquals(StudentStatus.CANCELLED,
             StudentStatus.valueOf("CANCELLED"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testInvalidValueOf()
     {
-        StudentStatus.valueOf("INVALID");
+        assertThrows(IllegalArgumentException.class,
+            () -> StudentStatus.valueOf("INVALID"));
     }
 }
