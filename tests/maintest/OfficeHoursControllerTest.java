@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -24,6 +25,69 @@ import student.StudentStatus;
  * Gao personally reviewed the tests and confirmed that he understands them.
  */
 public class OfficeHoursControllerTest {
+
+    /**
+     * Session variant that exposes controller exception handlers to tests.
+     */
+    private static class ThrowingSession extends OfficeHoursSession {
+        /** Creates a session with the normal valid PIN. */
+        ThrowingSession() {
+            super("42");
+        }
+
+        @Override
+        public boolean checkPin(String attempt) {
+            throw new IllegalArgumentException("PIN check failed.");
+        }
+
+        @Override
+        public int joinLine(String name, HelpType type) {
+            throw new IllegalArgumentException("Join failed.");
+        }
+    }
+
+    /** Exercises the main-choice handler for an illegal session operation. */
+    @Test
+    public void mainChoiceReportsIllegalArgumentException() {
+        String output = runInput(new ThrowingSession(), "4\n42\n5\n");
+
+        assertTrue(output.contains("PIN check failed."));
+    }
+
+    /** Exercises the join handler for an illegal session operation. */
+    @Test
+    public void joinReportsIllegalArgumentException() {
+        String output = runInput(new ThrowingSession(), "1\nAna\n1\n5\n");
+
+        assertTrue(output.contains("Join failed."));
+    }
+
+    /** Rejects a controller with no session model. */
+    @Test
+    public void nullSessionIsRejected() {
+        ConsoleView view = new ConsoleView(new Scanner(""), System.out);
+
+        assertThrows(IllegalArgumentException.class,
+            () -> new OfficeHoursController(null, view));
+    }
+
+    /** Rejects a controller with no view. */
+    @Test
+    public void nullViewIsRejected() {
+        OfficeHoursSession session = new OfficeHoursSession("42");
+
+        assertThrows(IllegalArgumentException.class,
+            () -> new OfficeHoursController(session, null));
+    }
+
+    /** Reports an unknown positive ticket and returns to the main menu. */
+    @Test
+    public void positionReportsUnknownPositiveTicket() {
+        String output = runInput(new OfficeHoursSession("42"), "2\n999\n5\n");
+
+        assertTrue(output.contains("Ticket is not waiting. "
+            + "Enter a waiting ticket."));
+    }
 
     /**
      * Runs the controller with test input instead of keyboard input.
@@ -120,14 +184,14 @@ public class OfficeHoursControllerTest {
         assertEquals(HelpType.CONCEPT, request.getHelpType());
         assertEquals(StudentStatus.WAITING, request.getStatus());
         assertTrue(output.contains("Your ticket is " + request.getTicket() + "."));
-        assertTrue(output.contains("1. " + request.getTicket() + " Ana"));
+        assertFalse(output.contains("1. " + request.getTicket() + " Ana"));
     }
 
     @Test
     public void blankNameIsRejectedAndNextJoinWorks() {
         OfficeHoursSession session = new OfficeHoursSession("42");
-        String output = runInput(session, "1\n   \n1\n1\nBen\n1\n5\n");
-        assertTrue(output.contains("Name and help type are required."));
+        String output = runInput(session, "1\n   \nBen\n1\n5\n");
+        assertTrue(output.contains("Name can't be blank."));
         assertEquals(1, session.getWaitingStudents().length);
         assertEquals("Ben", session.getWaitingStudents()[0].getName());
     }
@@ -167,7 +231,7 @@ public class OfficeHoursControllerTest {
     public void positionTextTicketDoesNotChangeLine() {
         OfficeHoursSession session = new OfficeHoursSession("42");
         int ticket = session.joinLine("Ana", HelpType.CONCEPT);
-        String output = runInput(session, "2\nabc\n2\n" + ticket + "\n5\n");
+        String output = runInput(session, "2\nabc\n" + ticket + "\n5\n");
         assertTrue(output.contains("Invalid ticket."));
         assertTrue(output.contains("Your position is 1."));
         assertEquals(1, session.getWaitingStudents().length);
@@ -177,7 +241,7 @@ public class OfficeHoursControllerTest {
     public void positionOverflowTicketDoesNotChangeLine() {
         OfficeHoursSession session = new OfficeHoursSession("42");
         int ticket = session.joinLine("Ana", HelpType.CONCEPT);
-        String output = runInput(session, "2\n2147483648\n2\n" + ticket + "\n5\n");
+        String output = runInput(session, "2\n2147483648\n" + ticket + "\n5\n");
         assertTrue(output.contains("Invalid ticket."));
         assertTrue(output.contains("Your position is 1."));
         assertEquals(1, session.getWaitingStudents().length);
@@ -187,8 +251,8 @@ public class OfficeHoursControllerTest {
     public void positionUnknownTicketDoesNotChangeLine() {
         OfficeHoursSession session = new OfficeHoursSession("42");
         int ticket = session.joinLine("Ana", HelpType.CONCEPT);
-        String output = runInput(session, "2\n0\n2\n" + ticket + "\n5\n");
-        assertTrue(output.contains("Ticket is not waiting."));
+        String output = runInput(session, "2\n0\n" + ticket + "\n5\n");
+        assertTrue(output.contains("Invalid ticket."));
         assertTrue(output.contains("Your position is 1."));
         assertEquals(1, session.getWaitingStudents().length);
     }
@@ -197,8 +261,8 @@ public class OfficeHoursControllerTest {
     public void positionNegativeTicketDoesNotChangeLine() {
         OfficeHoursSession session = new OfficeHoursSession("42");
         int ticket = session.joinLine("Ana", HelpType.CONCEPT);
-        String output = runInput(session, "2\n-1\n2\n" + ticket + "\n5\n");
-        assertTrue(output.contains("Ticket is not waiting."));
+        String output = runInput(session, "2\n-1\n" + ticket + "\n5\n");
+        assertTrue(output.contains("Invalid ticket."));
         assertTrue(output.contains("Your position is 1."));
         assertEquals(1, session.getWaitingStudents().length);
     }
@@ -207,40 +271,40 @@ public class OfficeHoursControllerTest {
     public void cancelTextTicketDoesNotChangeLine() {
         OfficeHoursSession session = new OfficeHoursSession("42");
         int ticket = session.joinLine("Ana", HelpType.CONCEPT);
-        String output = runInput(session, "3\nabc\n2\n" + ticket + "\n5\n");
+        String output = runInput(session, "3\nabc\n" + ticket + "\n5\n");
         assertTrue(output.contains("Invalid ticket."));
-        assertTrue(output.contains("Your position is 1."));
-        assertEquals(1, session.getWaitingStudents().length);
+        assertTrue(output.contains("Request cancelled."));
+        assertTrue(session.isLineEmpty());
     }
 
     @Test
     public void cancelOverflowTicketDoesNotChangeLine() {
         OfficeHoursSession session = new OfficeHoursSession("42");
         int ticket = session.joinLine("Ana", HelpType.CONCEPT);
-        String output = runInput(session, "3\n2147483648\n2\n" + ticket + "\n5\n");
+        String output = runInput(session, "3\n2147483648\n" + ticket + "\n5\n");
         assertTrue(output.contains("Invalid ticket."));
-        assertTrue(output.contains("Your position is 1."));
-        assertEquals(1, session.getWaitingStudents().length);
+        assertTrue(output.contains("Request cancelled."));
+        assertTrue(session.isLineEmpty());
     }
 
     @Test
     public void cancelUnknownTicketDoesNotChangeLine() {
         OfficeHoursSession session = new OfficeHoursSession("42");
         int ticket = session.joinLine("Ana", HelpType.CONCEPT);
-        String output = runInput(session, "3\n0\n2\n" + ticket + "\n5\n");
-        assertTrue(output.contains("Ticket is not waiting."));
-        assertTrue(output.contains("Your position is 1."));
-        assertEquals(1, session.getWaitingStudents().length);
+        String output = runInput(session, "3\n0\n" + ticket + "\n5\n");
+        assertTrue(output.contains("Invalid ticket."));
+        assertTrue(output.contains("Request cancelled."));
+        assertTrue(session.isLineEmpty());
     }
 
     @Test
     public void cancelNegativeTicketDoesNotChangeLine() {
         OfficeHoursSession session = new OfficeHoursSession("42");
         int ticket = session.joinLine("Ana", HelpType.CONCEPT);
-        String output = runInput(session, "3\n-1\n2\n" + ticket + "\n5\n");
-        assertTrue(output.contains("Ticket is not waiting."));
-        assertTrue(output.contains("Your position is 1."));
-        assertEquals(1, session.getWaitingStudents().length);
+        String output = runInput(session, "3\n-1\n" + ticket + "\n5\n");
+        assertTrue(output.contains("Invalid ticket."));
+        assertTrue(output.contains("Request cancelled."));
+        assertTrue(session.isLineEmpty());
     }
 
     @Test
@@ -248,7 +312,7 @@ public class OfficeHoursControllerTest {
         OfficeHoursSession session = new OfficeHoursSession("42");
         int ticket = session.joinLine("Ana", HelpType.CONCEPT);
         session.cancel(ticket);
-        String output = runInput(session, "3\n" + ticket + "\n2\n" + ticket + "\n5\n");
+        String output = runInput(session, "3\n" + ticket + "\n");
         assertTrue(output.contains("Ticket is not waiting."));
         assertFalse(output.contains("Request cancelled."));
         assertFalse(output.contains("Your position is"));
@@ -269,7 +333,7 @@ public class OfficeHoursControllerTest {
     @Test
     public void invalidInstructorTextReturnsToMainMenu() {
         OfficeHoursSession session = new OfficeHoursSession("42");
-        String output = runInput(session, "4\n42\nabc\n1\nAna\n1\n5\n");
+        String output = runInput(session, "4\n42\nabc\n5\n1\nAna\n1\n5\n");
         assertTrue(output.contains("Invalid input! Try again."));
         assertEquals(1, session.getWaitingStudents().length);
         assertNull(session.getCurrentStudent());
@@ -278,7 +342,7 @@ public class OfficeHoursControllerTest {
     @Test
     public void invalidInstructorOutOfRangeReturnsToMainMenu() {
         OfficeHoursSession session = new OfficeHoursSession("42");
-        String output = runInput(session, "4\n42\n9\n1\nAna\n1\n5\n");
+        String output = runInput(session, "4\n42\n9\n5\n1\nAna\n1\n5\n");
         assertTrue(output.contains("Invalid input! Try again."));
         assertEquals(1, session.getWaitingStudents().length);
         assertNull(session.getCurrentStudent());
@@ -287,7 +351,7 @@ public class OfficeHoursControllerTest {
     @Test
     public void invalidInstructorBlankReturnsToMainMenu() {
         OfficeHoursSession session = new OfficeHoursSession("42");
-        String output = runInput(session, "4\n42\n\n1\nAna\n1\n5\n");
+        String output = runInput(session, "4\n42\n\n5\n1\nAna\n1\n5\n");
         assertTrue(output.contains("Invalid input! Try again."));
         assertEquals(1, session.getWaitingStudents().length);
         assertNull(session.getCurrentStudent());
@@ -300,7 +364,7 @@ public class OfficeHoursControllerTest {
         int second = session.joinLine("Ben", HelpType.OTHER);
         // Keep Ana so we can check her status after she leaves the line.
         StudentRequest ana = session.getWaitingStudents()[0];
-        String output = runInput(session, "4\n42\n1\n4\n42\n2\n4\n42\n1\n5\n");
+        String output = runInput(session, "4\n42\n1\n2\n1\n5\n");
         assertTrue(output.contains("Ticket " + first + ": Ana"));
         assertTrue(output.contains("Ticket " + second + ": Ben"));
         assertEquals(StudentStatus.SERVED, ana.getStatus());
@@ -324,7 +388,7 @@ public class OfficeHoursControllerTest {
     @Test
     public void emptyInstructorActionsReportErrorsAndAllowRecovery() {
         OfficeHoursSession session = new OfficeHoursSession("42");
-        String output = runInput(session, "4\n42\n1\n4\n42\n2\n1\nAna\n1\n5\n");
+        String output = runInput(session, "4\n42\n1\n2\n5\n1\nAna\n1\n5\n");
         assertTrue(output.contains("The line is empty."));
         assertTrue(output.contains("No student is being helped."));
         assertNull(session.getCurrentStudent());
@@ -381,7 +445,7 @@ public class OfficeHoursControllerTest {
     @Test
     public void showEmptyLineAndBackDoNotChangeSession() {
         OfficeHoursSession session = new OfficeHoursSession("42");
-        String output = runInput(session, "4\n42\n3\n4\n42\n5\n5\n");
+        String output = runInput(session, "4\n42\n3\n5\n5\n");
         assertTrue(output.contains("The line is empty."));
         assertFalse(output.contains("Invalid input!"));
         assertTrue(session.isLineEmpty());
