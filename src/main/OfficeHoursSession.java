@@ -110,6 +110,22 @@ public class OfficeHoursSession {
         return completed;
     }
 
+    /**
+     * Sends the currently helped request back to the waiting line.
+     *
+     * @return the requeued request
+     */
+    public StudentRequest requeueCurrent() {
+        if (currentStudent == null) {
+            throw new IllegalStateException("No student is being helped.");
+        }
+        currentStudent.setStatus(StudentStatus.WAITING);
+        line.enqueue(currentStudent);
+        StudentRequest requeued = currentStudent;
+        currentStudent = null;
+        return requeued;
+    }
+
     /** @return the current request, or null when the instructor is idle */
     public StudentRequest getCurrentStudent() {
         return currentStudent;

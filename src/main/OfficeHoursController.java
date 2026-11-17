@@ -160,7 +160,9 @@ public class OfficeHoursController {
             view.showMessage("Access denied.");
             return;
         }
-        String choice = view.readLine("1. Call next  2. Complete current  3. Show line  4. Back: ");
+        String choice = view.readLine(
+            "1. Call next  2. Complete current  3. Show line"
+            + "  4. Requeue current  5. Back: ");
         if (choice == null) {
             return;
         }
@@ -176,8 +178,8 @@ public class OfficeHoursController {
                 case 1 -> view.showMessage(format(session.callNext()));
                 case 2 -> view.showMessage(format(session.completeCurrent()));
                 case 3 -> showLine();
-                case 4 -> {
-                }
+                case 4 -> view.showMessage(format(session.requeueCurrent()));
+                case 5 -> { }
                 default -> invalidInputMessage();
             }
         } catch (IllegalStateException error) {
