@@ -74,6 +74,17 @@ public class OfficeHoursSessionTest {
             () -> session.getPosition(-1));
     }
 
+    /** Counts a waiting request after cancelled entries are skipped. */
+    @Test
+    public void getPositionSkipsCancelledEntries() {
+        OfficeHoursSession session = new OfficeHoursSession("42");
+        int cancelled = session.joinLine("Alex", HelpType.CONCEPT);
+        int waiting = session.joinLine("Blair", HelpType.DEBUGGING);
+        session.cancel(cancelled);
+
+        assertEquals(1, session.getPosition(waiting));
+    }
+
     @Test
     public void cancelMarksWaitingRequestCancelled() {
         OfficeHoursSession session = new OfficeHoursSession("42");
@@ -138,6 +149,22 @@ public class OfficeHoursSessionTest {
         IllegalStateException empty = assertThrows(
             IllegalStateException.class, session::callNext);
         assertEquals("The line is empty.", empty.getMessage());
+    }
+
+    /** Removes every cancelled entry before reporting an empty line. */
+    @Test
+    public void callNextRejectsWhenAllStudentsAreCancelled() {
+        OfficeHoursSession session = new OfficeHoursSession("42");
+        int first = session.joinLine("Alex", HelpType.CONCEPT);
+        int second = session.joinLine("Blair", HelpType.DEBUGGING);
+        session.cancel(first);
+        session.cancel(second);
+
+        IllegalStateException error = assertThrows(
+            IllegalStateException.class, session::callNext);
+
+        assertEquals("The line is empty.", error.getMessage());
+        assertTrue(session.isLineEmpty());
     }
 
     @Test
