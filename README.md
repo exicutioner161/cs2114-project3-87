@@ -167,15 +167,15 @@ Each controller menu is written twice: once as the text the user sees, and once 
 | `StudentRequest.java` | Zayd Pathan: wrote it (ChatGPT-assisted). |
 | `HelpType.java` | Zayd Pathan: wrote it (ChatGPT-assisted). |
 | `StudentStatus.java` | Zayd Pathan: wrote it (ChatGPT-assisted). |
-| `OfficeHoursSession.java` | Brian Tran: drafted it with GenAI and reviewed it. **D4:** Brian added `requeueCurrent()` *[Brian: GenAI use]*. Rahul removed the `1234` PIN constructor (Claude-assisted). |
-| `OfficeHoursController.java` | Brian Tran: drafted it with GenAI and reviewed it. **D4:** Brian added the Requeue option, the looping instructor menu, and the re-prompts *[Brian: GenAI use]*. |
+| `OfficeHoursSession.java` | Brian Tran: drafted it with GenAI and reviewed it. **D4:** Brian added `requeueCurrent()` by drafting and reviewing using ChatGPT. Rahul removed the `1234` PIN constructor (Claude-assisted). |
+| `OfficeHoursController.java` | Brian Tran: drafted it with GenAI and reviewed it. **D4:** Brian added the Requeue option, the looping instructor menu, and the re-prompts by drafting and reviewing using ChatGPT. |
 | `OfficeHoursApp.java` | Brian Tran: wrote it. **D4:** Rahul Rajendran added the startup PIN prompt and `start(ConsoleView)` (Claude-assisted). |
 | `ConsoleView.java` | Zhaojin Gao: requested it from Codex using the team's model/view design, then personally reviewed and understood the code. |
 | `ConsoleViewDemo.java` | Zhaojin Gao: requested a view-only demo from Codex, then personally reviewed and understood it. |
 | `LinkedQueueTest.java` | Rahul Rajendran: wrote it. Brian Tran converted it to JUnit 5. **D4:** Rahul added 6 tests covering refill after empty or `clear()`, interleaved order, and recovery after bad input (Claude-assisted). |
-| `OfficeHoursSessionTest.java` | Rahul Rajendran: fixed two enum names in D3. **D4:** Brian Tran expanded it from 3 to 20 tests, including requeue *[Brian: GenAI use]*. |
-| `OfficeHoursControllerTest.java` | Brian Tran: wrote the original tests with GenAI. **D4:** Zhaojin Gao requested 33 tests from Codex and reviewed all of them; Brian added 7, including the requeue tests *[Brian: GenAI use]*. |
-| `OfficeHoursAppTest.java` | **D4:** Rahul Rajendran wrote 9 startup PIN tests (Claude-assisted). Brian Tran added 2 *[Brian: GenAI use]*. |
+| `OfficeHoursSessionTest.java` | Rahul Rajendran: fixed two enum names in D3. **D4:** Brian Tran expanded it from 3 to 20 tests, including requeue by drafting and reviewing using ChatGPT. |
+| `OfficeHoursControllerTest.java` | Brian Tran: wrote the original tests with GenAI. **D4:** Zhaojin Gao requested 33 tests from Codex and reviewed all of them; Brian added 7, including the requeue tests by drafting and reviewing using ChatGPT. |
+| `OfficeHoursAppTest.java` | **D4:** Rahul Rajendran wrote 9 startup PIN tests (Claude-assisted). Brian Tran added 2 by drafting and reviewing using ChatGPT. |
 | `ConsoleViewTest.java` | Zhaojin Gao: requested it from Codex and reran all 9 tests after the merge. |
 | `ConsoleViewDemoTest.java` | Zhaojin Gao: requested it from Codex and reran all 3 tests after the merge. |
 | `StudentRequestTest.java` | *[Zayd: fill in]* |
@@ -191,7 +191,7 @@ Each controller menu is written twice: once as the text the user sees, and once 
 - **D4:** I asked Codex to add controller tests using simple Java. It drafted 33 additional tests for normal menu actions, bad input, and input ending at prompts. I personally reviewed all of the added tests, understood how they work, and found them correct. At my request, Codex also added simple explanations of the test helper and important checks. These tests run the real controller with a real session and a console view using test input. They check both printed messages and model state. They do not replace the separate model tests.
 
 **Brian Tran:**
-- **D4:** *[Brian: fill in]*
+- **D4:** I used ChatGPT to draft the re-queue feature, session, and controller changes in addition to the tests, and reviewed the code manually.
 
 **Zayd Pathan:**
 - **D4:** *[Zayd: fill in]*
