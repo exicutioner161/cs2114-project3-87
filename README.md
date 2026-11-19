@@ -177,13 +177,8 @@ Each controller menu is written twice: once as the text the user sees, and once 
 | `OfficeHoursAppTest.java` | **D4:** Rahul Rajendran wrote 9 startup PIN tests (Claude-assisted). Brian Tran added 2 by drafting and reviewing using Copilot. |
 | `ConsoleViewTest.java` | Zhaojin Gao: requested it from Codex and reran all 9 tests after the merge. |
 | `ConsoleViewDemoTest.java` | Zhaojin Gao: requested it from Codex and reran all 3 tests after the merge. |
-<<<<<<< HEAD
 | `StudentRequestTest.java` | *Zayd ran it through codex and double checked it by running it.* |
-=======
 | `StudentRequestTest.java` | **D4:** Zayd Pathan wrote it *[Zayd: GenAI use]*. |
->>>>>>> b3509323020052f765fed7689bad170f0e51452c
-| `HelpTypeTest.java` | Zayd Pathan: wrote it. **D4:** Rahul Rajendran fixed the expected order, labels, and minutes by hand and converted it to JUnit 5. |
-| `StudentStatusTest.java` | Zayd Pathan: wrote it. **D4:** Rahul Rajendran changed `COMPLETED` to `SERVED` by hand and converted it to JUnit 5. |
 
 ## GenAI Note
 
@@ -197,10 +192,5 @@ Each controller menu is written twice: once as the text the user sees, and once 
 - **D4:** I used Copilot to draft the re-queue feature, session, and controller changes in addition to the tests, and reviewed the code manually.
 
 **Zayd Pathan:**
-<<<<<<< HEAD
-- **D4:** 
-
-I used ChatGPT to help create the JUnit test cases for my StudentRequest class. It helped identify the different methods that needed testing, including the constructor, getter methods, setting student status, and handling invalid inputs. I reviewed the generated tests and adjusted them to match my HelpType and StudentStatus enums. I used the tests to better understand how to test my class and verify that it works as intended.*
+- **D4:** I used ChatGPT to help create the JUnit test cases for my StudentRequest class. It helped identify the different methods that needed testing, including the constructor, getter methods, setting student status, and handling invalid inputs. I reviewed the generated tests and adjusted them to match my HelpType and StudentStatus enums. I used the tests to better understand how to test my class and verify that it works as intended.*
 =======
-- **D4:** *[Zayd: fill in]*
->>>>>>> b3509323020052f765fed7689bad170f0e51452c
