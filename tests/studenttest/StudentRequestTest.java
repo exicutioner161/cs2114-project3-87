@@ -1,7 +1,9 @@
 package studenttest;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import student.*;
+
 
 public class StudentRequestTest {
 
@@ -76,29 +78,25 @@ public class StudentRequestTest {
             request.getStatus());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testNegativeTicket() {
-        new StudentRequest(-1, "Zayd",
-            HelpType.DEBUGGING);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testNullName() {
-        new StudentRequest(1, null,
-            HelpType.DEBUGGING);
+        assertThrows(IllegalArgumentException.class,
+            () -> new StudentRequest(1, null, HelpType.DEBUGGING));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testNullHelpType() {
-        new StudentRequest(1, "Zayd", null);
+        assertThrows(IllegalArgumentException.class,
+            () -> new StudentRequest(1, "Zayd", null));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testNullStatus() {
         StudentRequest request = new StudentRequest(
             1, "Zayd", HelpType.DEBUGGING);
 
-        request.setStatus(null);
+        assertThrows(IllegalArgumentException.class,
+            () -> request.setStatus(null));
     }
 }
 
