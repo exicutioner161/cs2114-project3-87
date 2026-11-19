@@ -17,13 +17,13 @@ You need **Java 17 or newer** (the code uses text blocks and switch arrows). **J
 - **VS Code:** open the folder. The Java extension reads `.vscode/settings.json`.
 - **Eclipse:** File > New > Java Project. Uncheck "Use default location" and select this folder. Then set `src` and `tests` as source folders, add JUnit 5, and set compliance to 17. After pulling, run **Project > Clean** so Eclipse doesn't run old classes.
 
-**Tests:** right-click the `tests` folder and choose Run As > JUnit Test, or run any single file the same way. All 117 tests pass. *[Update the count when Zayd's tests are in.]*
+**Tests:** right-click the `tests` folder and choose Run As > JUnit Test, or run any single file the same way. All 127 tests pass.
 
 | Test file | Tests | Covers |
 | --- | --- | --- |
 | `LinkedQueueTest` | 24 | Every queue method, order after interleaved enqueues and dequeues, refill after emptying, bad input |
 | `OfficeHoursSessionTest` | 20 | A normal and a bad-input case for every session method, including `requeueCurrent()` |
-| `StudentRequestTest` | *[Zayd]* | Constructor validation, getters, `setStatus` |
+| `StudentRequestTest` | 10 | Constructor and getters, every `setStatus` change, and bad input (null name, null help type, `setStatus(null)`) |
 | `HelpTypeTest`, `StudentStatusTest` | 4, 3 | Enum values, labels, minutes, invalid names |
 | `OfficeHoursControllerTest` | 43 | Every menu path, bad input and end of input at every prompt, requeue |
 | `OfficeHoursAppTest` | 11 | Startup PIN: blank PINs, end of input, the PIN reaching the instructor menu |
@@ -101,7 +101,6 @@ Our feature is **Skip / Requeue**: the instructor sends the student being helped
 ### What doesn't work yet
 
 - **Some error messages are generic.** The main menu and instructor menu show "Invalid input! Try again.", and a bad help type shows "Invalid help type." Neither says what a valid choice is.
-- *[If Zayd hasn't pushed `StudentRequestTest` by submission, add it here.]*
 
 Nothing crashes on any bad input we've tested.
 
@@ -167,18 +166,22 @@ Each controller menu is written twice: once as the text the user sees, and once 
 | `StudentRequest.java` | Zayd Pathan: wrote it (ChatGPT-assisted). |
 | `HelpType.java` | Zayd Pathan: wrote it (ChatGPT-assisted). |
 | `StudentStatus.java` | Zayd Pathan: wrote it (ChatGPT-assisted). |
-| `OfficeHoursSession.java` | Brian Tran: drafted it with GenAI and reviewed it. **D4:** Brian added `requeueCurrent()` *[Brian: GenAI use]*. Rahul removed the `1234` PIN constructor (Claude-assisted). |
-| `OfficeHoursController.java` | Brian Tran: drafted it with GenAI and reviewed it. **D4:** Brian added the Requeue option, the looping instructor menu, and the re-prompts *[Brian: GenAI use]*. |
+| `OfficeHoursSession.java` | Brian Tran: drafted it with GenAI and reviewed it. **D4:** Brian added `requeueCurrent()` by drafting and reviewing using Copilot. Rahul removed the `1234` PIN constructor (Claude-assisted). |
+| `OfficeHoursController.java` | Brian Tran: drafted it with GenAI and reviewed it. **D4:** Brian added the Requeue option, the looping instructor menu, and the re-prompts by drafting and reviewing using Copilot. |
 | `OfficeHoursApp.java` | Brian Tran: wrote it. **D4:** Rahul Rajendran added the startup PIN prompt and `start(ConsoleView)` (Claude-assisted). |
 | `ConsoleView.java` | Zhaojin Gao: requested it from Codex using the team's model/view design, then personally reviewed and understood the code. |
 | `ConsoleViewDemo.java` | Zhaojin Gao: requested a view-only demo from Codex, then personally reviewed and understood it. |
 | `LinkedQueueTest.java` | Rahul Rajendran: wrote it. Brian Tran converted it to JUnit 5. **D4:** Rahul added 6 tests covering refill after empty or `clear()`, interleaved order, and recovery after bad input (Claude-assisted). |
-| `OfficeHoursSessionTest.java` | Rahul Rajendran: fixed two enum names in D3. **D4:** Brian Tran expanded it from 3 to 20 tests, including requeue *[Brian: GenAI use]*. |
-| `OfficeHoursControllerTest.java` | Brian Tran: wrote the original tests with GenAI. **D4:** Zhaojin Gao requested 33 tests from Codex and reviewed all of them; Brian added 7, including the requeue tests *[Brian: GenAI use]*. |
-| `OfficeHoursAppTest.java` | **D4:** Rahul Rajendran wrote 9 startup PIN tests (Claude-assisted). Brian Tran added 2 *[Brian: GenAI use]*. |
+| `OfficeHoursSessionTest.java` | Rahul Rajendran: fixed two enum names in D3. **D4:** Brian Tran expanded it from 3 to 20 tests, including requeue by drafting and reviewing using Copilot. |
+| `OfficeHoursControllerTest.java` | Brian Tran: wrote the original tests with GenAI. **D4:** Zhaojin Gao requested 33 tests from Codex and reviewed all of them; Brian added 7, including the requeue tests by drafting and reviewing using Copilot. |
+| `OfficeHoursAppTest.java` | **D4:** Rahul Rajendran wrote 9 startup PIN tests (Claude-assisted). Brian Tran added 2 by drafting and reviewing using Copilot. |
 | `ConsoleViewTest.java` | Zhaojin Gao: requested it from Codex and reran all 9 tests after the merge. |
 | `ConsoleViewDemoTest.java` | Zhaojin Gao: requested it from Codex and reran all 3 tests after the merge. |
+<<<<<<< HEAD
 | `StudentRequestTest.java` | *Zayd ran it through codex and double checked it by running it.* |
+=======
+| `StudentRequestTest.java` | **D4:** Zayd Pathan wrote it *[Zayd: GenAI use]*. |
+>>>>>>> b3509323020052f765fed7689bad170f0e51452c
 | `HelpTypeTest.java` | Zayd Pathan: wrote it. **D4:** Rahul Rajendran fixed the expected order, labels, and minutes by hand and converted it to JUnit 5. |
 | `StudentStatusTest.java` | Zayd Pathan: wrote it. **D4:** Rahul Rajendran changed `COMPLETED` to `SERVED` by hand and converted it to JUnit 5. |
 
@@ -191,9 +194,13 @@ Each controller menu is written twice: once as the text the user sees, and once 
 - **D4:** I asked Codex to add controller tests using simple Java. It drafted 33 additional tests for normal menu actions, bad input, and input ending at prompts. I personally reviewed all of the added tests, understood how they work, and found them correct. At my request, Codex also added simple explanations of the test helper and important checks. These tests run the real controller with a real session and a console view using test input. They check both printed messages and model state. They do not replace the separate model tests.
 
 **Brian Tran:**
-- **D4:** *[Brian: fill in]*
+- **D4:** I used Copilot to draft the re-queue feature, session, and controller changes in addition to the tests, and reviewed the code manually.
 
 **Zayd Pathan:**
+<<<<<<< HEAD
 - **D4:** 
 
 I used ChatGPT to help create the JUnit test cases for my StudentRequest class. It helped identify the different methods that needed testing, including the constructor, getter methods, setting student status, and handling invalid inputs. I reviewed the generated tests and adjusted them to match my HelpType and StudentStatus enums. I used the tests to better understand how to test my class and verify that it works as intended.*
+=======
+- **D4:** *[Zayd: fill in]*
+>>>>>>> b3509323020052f765fed7689bad170f0e51452c
