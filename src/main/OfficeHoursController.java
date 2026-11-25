@@ -178,6 +178,10 @@ public class OfficeHoursController {
             view.showMessage("Access denied.");
             return;
         }
+        executeInstructorAction(getInstructorInput());
+    }
+
+    private int getInstructorInput() {
         while (true) {
             String choice = view.readLine("""
                     1. Call next
@@ -187,27 +191,32 @@ public class OfficeHoursController {
                     5. Back
                     ------------------
                     """);
-            if (choice == null || "5".equals(choice.trim())) {
-                return;
+            if (choice == null) {
+                return -1;
             }
-            int action;
             try {
-                action = Integer.parseInt(choice.trim());
+                int action = Integer.parseInt(choice.trim());
+                return action;
             } catch (NumberFormatException error) {
                 invalidInputMessage();
-                continue;
             }
-            try {
-                switch (action) {
-                    case 1 -> view.showMessage(format(session.callNext()));
-                    case 2 -> view.showMessage(format(session.completeCurrent()));
-                    case 3 -> showLine();
-                    case 4 -> view.showMessage(format(session.requeueCurrent()));
-                    default -> invalidInputMessage();
+        }
+    }
+
+    private void executeInstructorAction(int action) {
+        try {
+            switch (action) {
+                case 1 -> view.showMessage(format(session.callNext()));
+                case 2 -> view.showMessage(format(session.completeCurrent()));
+                case 3 -> showLine();
+                case 4 -> view.showMessage(format(session.requeueCurrent()));
+                case 5 -> {
+                    // Do nothing
                 }
-            } catch (IllegalStateException error) {
-                view.showMessage(error.getMessage());
+                default -> invalidInputMessage();
             }
+        } catch (IllegalStateException error) {
+            view.showMessage(error.getMessage());
         }
     }
 
