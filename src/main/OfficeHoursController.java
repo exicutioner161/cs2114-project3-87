@@ -178,13 +178,11 @@ public class OfficeHoursController {
             view.showMessage("Access denied.");
             return;
         }
-        while (true) {
-            int action = getInstructorInput();
-            if (action == -1 || action == 5) {
-                return;
-            }
-            executeInstructorAction(action);
+        int action = getInstructorInput();
+        if (action == 5) {
+            return;
         }
+        executeInstructorAction(action);
     }
 
     private int getInstructorInput() {
