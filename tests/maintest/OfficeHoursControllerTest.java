@@ -506,7 +506,8 @@ public class OfficeHoursControllerTest {
     public void endOfInputAtInstructorChoiceKeepsSessionUnchanged() {
         OfficeHoursSession session = new OfficeHoursSession("42");
         int ticket = session.joinLine("Ben", HelpType.OTHER);
-        runInput(session, "4\n42\n");
+        String output = runInput(session, "4\n42\n");
+        assertFalse(output.contains("Invalid input!"));
         assertEquals(1, session.getWaitingStudents().length);
         assertEquals(ticket, session.getWaitingStudents()[0].getTicket());
         assertNull(session.getCurrentStudent());

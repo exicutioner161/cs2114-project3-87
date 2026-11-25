@@ -178,7 +178,11 @@ public class OfficeHoursController {
             view.showMessage("Access denied.");
             return;
         }
-        executeInstructorAction(getInstructorInput());
+        int action = getInstructorInput();
+        if (action == 5) {
+            return;
+        }
+        executeInstructorAction(action);
     }
 
     private int getInstructorInput() {
@@ -210,9 +214,6 @@ public class OfficeHoursController {
                 case 2 -> view.showMessage(format(session.completeCurrent()));
                 case 3 -> showLine();
                 case 4 -> view.showMessage(format(session.requeueCurrent()));
-                case 5 -> {
-                    // Do nothing
-                }
                 default -> invalidInputMessage();
             }
         } catch (IllegalStateException error) {
